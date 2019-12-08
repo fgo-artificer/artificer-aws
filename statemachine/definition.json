@@ -1,0 +1,137 @@
+{
+  "Comment": "A state machine to drive the ETL process from GamePress API to Artificer API",
+  "StartAt": "PassInput",
+  "States": {
+    "PassInput": {
+      "Comment": "Pass input for clarity",
+      "Type": "Pass",
+      "Next": "ArtificerParallelETL"
+    },
+    "ArtificerParallelETL": {
+      "Comment": "A Parallel state used to extract data from GamePress API and loads into S3",
+      "Type": "Parallel",
+      "Next": "ArtificerEnd",
+      "Branches": [
+        {
+          "StartAt": "ExtractMaterials",
+          "States": {
+            "ExtractMaterials": {
+              "Comment": "Extract - Downloads all materials from GamePress website",
+              "Type": "Task",
+              "Resource": "arn:aws:lambda:us-east-1:679411612526:function:artificer-extract-materials",
+              "Next": "WaitAfterExtractMaterials"
+            },
+            "WaitAfterExtractMaterials": {
+              "Comment": "Waits after extract to make sure write is complete",
+              "Type": "Wait",
+              "Seconds": 3,
+              "Next": "TransformMaterials"
+            },
+            "TransformMaterials": {
+              "Comment": "Transform - We want all materials, no action",
+              "Type": "Pass",
+              "Next": "WaitAfterTransformMaterials"
+            },
+            "WaitAfterTransformMaterials": {
+              "Comment": "Waits after transform to make sure updated write is complete",
+              "Type": "Wait",
+              "Seconds": 3,
+              "Next": "LoadMaterials"
+            },
+            "LoadMaterials": {
+              "Comment": "Load - Loads the transformed materials into Artificer DynamoDB",
+              "Type": "Pass",
+              "Next": "WaitAfterLoadMaterials"
+            },
+            "WaitAfterLoadMaterials": {
+              "Comment": "Waits after load to make sure final write is complete",
+              "Type": "Wait",
+              "Seconds": 3,
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "ExtractServants",
+          "States": {
+            "ExtractServants": {
+              "Comment": "Extract - Downloads all servants from GamePress website",
+              "Type": "Pass",
+              "Next": "WaitAfterExtractServants"
+            },
+            "WaitAfterExtractServants": {
+              "Comment": "Waits after extract to make sure write is complete",
+              "Type": "Wait",
+              "Seconds": 3,
+              "Next": "TransformServants"
+            },
+            "TransformServants": {
+              "Comment": "Transform - Remove all servants that arent 5 stars",
+              "Type": "Pass",
+              "Next": "WaitAfterTransformServants"
+            },
+            "WaitAfterTransformServants": {
+              "Comment": "Waits after transform to make sure updated write is complete",
+              "Type": "Wait",
+              "Seconds": 3,
+              "Next": "LoadServants"
+            },
+            "LoadServants": {
+              "Comment": "Load - Loads the transformed servants into Artificer DynamoDB",
+              "Type": "Pass",
+              "Next": "WaitAfterLoadServants"
+            },
+            "WaitAfterLoadServants": {
+              "Comment": "Waits after load to make sure final write is complete",
+              "Type": "Wait",
+              "Seconds": 3,
+              "End": true
+            }
+          }
+        },
+        {
+          "StartAt": "ExtractSkills",
+          "States": {
+            "ExtractSkills": {
+              "Comment": "Extract - Downloads all skills from GamePress website",
+              "Type": "Pass",
+              "Next": "WaitAfterExtractSkills"
+            },
+            "WaitAfterExtractSkills": {
+              "Comment": "Waits after extract to make sure write is complete",
+              "Type": "Wait",
+              "Seconds": 3,
+              "Next": "TransformSkills"
+            },
+            "TransformSkills": {
+              "Comment": "Transform - Remove all skills that dont belong to 5 star servants",
+              "Type": "Pass",
+              "Next": "WaitAfterTransformSkills"
+            },
+            "WaitAfterTransformSkills": {
+              "Comment": "Waits after transform to make sure updated write is complete",
+              "Type": "Wait",
+              "Seconds": 3,
+              "Next": "LoadSkills"
+            },
+            "LoadSkills": {
+              "Comment": "Load - Loads the transformed skills into Artificer DynamoDB",
+              "Type": "Pass",
+              "Next": "WaitAfterLoadSkills"
+            },
+            "WaitAfterLoadSkills": {
+              "Comment": "Waits after load to make sure final write is complete",
+              "Type": "Wait",
+              "Seconds": 3,
+              "End": true
+            }
+          }
+        }
+      ]
+    },
+    "ArtificerEnd": {
+      "Type": "Pass",
+      "End": true
+    }
+  }
+}
