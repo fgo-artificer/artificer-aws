@@ -1,0 +1,7 @@
+lambda/artificer-extract-materials/artificer-extract-materials
+**/package
+
+*.zip
+*.tar
+*.json
+
