@@ -1,0 +1,29 @@
+{
+  "ModelName": "MaterialEntity",
+  "ModelMetadata": {
+    "Author": "jadedtdt",
+    "DateCreated": "Dec 15, 2019, 3:35 PM",
+    "DateLastModified": "Dec 15, 2019, 3:36 PM",
+    "Description": ""
+  },
+  "DataModel": [
+    {
+      "TableName": "artificer-materials",
+      "KeyAttributes": {
+        "PartitionKey": {
+          "AttributeName": "ITEM_TYPE",
+          "AttributeType": "S"
+        }
+      },
+      "NonKeyAttributes": [
+        {
+          "AttributeName": "MATERIALS",
+          "AttributeType": "M"
+        }
+      ],
+      "DataAccess": {
+        "MySql": {}
+      }
+    }
+  ]
+}
