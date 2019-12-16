@@ -1,6 +1,2 @@
 *.zip
 *.tar
-*.json
-
-!dynamodb/MaterialEntity.json
-!postman/artificer.postman_collection.json
