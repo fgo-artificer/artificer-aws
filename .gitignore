@@ -1,7 +1,5 @@
-lambda/artificer-extract-materials/artificer-extract-materials
-**/package
-
 *.zip
 *.tar
 *.json
 
+!postman/artificer.postman_collection.json

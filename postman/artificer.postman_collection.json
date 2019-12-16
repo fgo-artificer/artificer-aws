@@ -1,0 +1,85 @@
+{
+	"info": {
+		"_postman_id": "bb3f6693-d540-472f-8a13-7fd992f1faa9",
+		"name": "artificer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GetMaterialByName[Not Implemented]",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/artificer/v1/materials?name=Holy Grail",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"artificer",
+						"v1",
+						"materials"
+					],
+					"query": [
+						{
+							"key": "name",
+							"value": "Holy Grail"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMaterials",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/artificer/v1/materials",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"artificer",
+						"v1",
+						"materials"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMaterialsByItemType",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/artificer/v1/materials?itemType=Ascension Materials",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"artificer",
+						"v1",
+						"materials"
+					],
+					"query": [
+						{
+							"key": "itemType",
+							"value": "Ascension Materials"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
